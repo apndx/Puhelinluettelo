@@ -1,0 +1,19 @@
+{
+  "persons": [
+    {
+      "name": "Martti Tienari",
+      "phone": "040 - 000000",
+      "id": 1
+    },
+    {
+      "name": "Arto Järvinen",
+      "phone": "040-123456",
+      "id": 3
+    },
+    {
+      "name": "Leidi Livia",
+      "phone": "040 - 8747474",
+      "id": 5
+    }
+  ]
+}
