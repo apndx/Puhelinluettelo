@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 let persons = [
     {
@@ -19,6 +22,7 @@ let persons = [
     }
   ]
 
+
   app.get('/', (req, res) => {
     res.send('<h1>Tervetuloa puhelinluetteloon!</h1>')
   })
@@ -28,6 +32,17 @@ let persons = [
     res.json(persons)
   })
   
+  app.get('/info', (req, res) => {
+
+    const info = {
+      luettelossa: persons.length,
+      date : new Date()
+    }
+    
+    res.send(info)
+
+  })
+
   const PORT = 3001
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
