@@ -13,12 +13,12 @@ let persons = [
     {
       "name": "Arto Järvinen",
       "phone": "040-123456",
-      "id": 3
+      "id": 2
     },
     {
       "name": "Leidi Livia",
       "phone": "040 - 8747474",
-      "id": 5
+      "id": 3
     }
   ]
 
@@ -38,10 +38,21 @@ let persons = [
       luettelossa: persons.length,
       date : new Date()
     }
-    
+
     res.send(info)
 
   })
+
+  app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(person => person.id === id )
+    if (person) {
+      response.json(person)
+    } else {
+      response.status(404).end()
+    }
+  })
+
 
   const PORT = 3001
   app.listen(PORT, () => {
