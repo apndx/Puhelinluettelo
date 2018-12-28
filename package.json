@@ -1,28 +1,27 @@
 {
-  "name": "osa1",
-  "version": "0.1.0",
-  "private": true,
+  "name": "puhelinluettelo",
+  "version": "0.3.1",
   "dependencies": {
-    "axios": "^0.18.0",
-    "json-server": "^0.14.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "express": "^4.16.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "json-server -p3001 db.json"
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "description": "Full Stack kurssin viikko 3",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apndx/Puhelinluettelo.git"
+  },
+  "author": "apndx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apndx/Puhelinluettelo/issues"
+  },
+  "homepage": "https://github.com/apndx/Puhelinluettelo#readme"
 }
