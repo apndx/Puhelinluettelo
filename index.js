@@ -61,20 +61,21 @@ let persons = [
 
   app.post('/api/persons', (request, response) => {
     const body = request.body
-  
-    if (body.name === undefined) {
-      return response.status(400).json({error: 'name missing'})
+    const names = persons.map(person => person.name)
+    console.log(names)
+    if (body.name === undefined || body.phone === undefined) {
+      return response.status(400).json({error: 'name or phone number missing'})
+    } else if (names.includes(body.name)){
+      return response.status(400).json({error: 'name already exists'})
+    } else {
+      const person = {
+        name: body.name,
+        phone: body.phone,
+        id: getRandomInt(1000000)
+      }
+      persons = persons.concat(person)
+      response.json(person)
     }
-  
-    const person = {
-      name: body.name,
-      phone: body.phone,
-      id: getRandomInt(1000000)
-    }
-  
-    persons = persons.concat(person)
-  
-    response.json(person)
   })
 
   function getRandomInt(max) {
