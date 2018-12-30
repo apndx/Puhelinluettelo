@@ -2,10 +2,11 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-
+const cors = require('cors')
 
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
+app.use(cors())
 
 let persons = [
     {
@@ -24,7 +25,6 @@ let persons = [
       "id": 3
     }
   ]
-
 
   app.get('/', (req, res) => {
     res.send('<h1>Tervetuloa puhelinluetteloon!</h1>')
@@ -65,7 +65,8 @@ let persons = [
   app.post('/api/persons', (request, response) => {
     const body = request.body
     const names = persons.map(person => person.name)
-    console.log(names)
+    console.log('pyynnön data', request.body)
+    console.log('nimilista', names)
     if (body.name === undefined || body.phone === undefined) {
       return response.status(400).json({error: 'name or phone number missing'})
     } else if (names.includes(body.name)){
