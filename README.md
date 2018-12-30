@@ -17,6 +17,6 @@ Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 Runs the app in the development mode.<br>
 The page will reload if you make edits.<br>
 
-## [Application in heroku](https://luuriluettelo.herokuapp.com/api/persons)
+## [Application in heroku](https://luuriluettelo.herokuapp.com/)
 
 
