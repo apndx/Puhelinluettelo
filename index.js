@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person')
 
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
@@ -27,13 +28,25 @@ let persons = [
     }
   ]
 
+  const formatPerson = (person) => {
+    return {
+      name: person.name,
+      phone: person.phone,
+      id: person._id
+    }
+  }
+
   app.get('/', (req, res) => {
     res.send('<h1>Tervetuloa puhelinluetteloon!</h1>')
   })
 
 
   app.get('/api/persons', (req, res) => {
-    res.json(persons)
+    Person
+      .find({})
+      .then(persons => {
+        res.json(persons.map(formatPerson))
+      })
   })
   
   app.get('/info', (req, res) => {
@@ -51,7 +64,11 @@ let persons = [
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id )
     if (person) {
-      response.json(person)
+      Person
+      .findById(request.params.id)
+      .then(person => {
+        response.json(formatPerson(person))
+      })
     } else {
       response.status(404).end()
     }
@@ -73,13 +90,18 @@ let persons = [
     } else if (names.includes(body.name)){
       return response.status(400).json({error: 'name already exists'})
     } else {
-      const person = {
+      const person = new Person( {
         name: body.name,
         phone: body.phone,
         id: getRandomInt(1000000)
-      }
+    })
       persons = persons.concat(person)
-      response.json(person)
+
+      person 
+        .save()
+        .then(savedPerson => {
+          response.json(formatPerson(savedPerson))
+        })
     }
   })
 
