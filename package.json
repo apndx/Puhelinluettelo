@@ -3,6 +3,7 @@
   "version": "0.3.1",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1"
@@ -10,11 +11,13 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "description": "Full Stack kurssin viikko 3",
   "main": "index.js",
   "devDependencies": {
+    "eslint": "^5.11.1",
     "nodemon": "^1.18.9"
   },
   "repository": {
