@@ -61,23 +61,30 @@ let persons = [
   })
 
   app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id )
-    if (person) {
       Person
       .findById(request.params.id)
       .then(person => {
-        response.json(formatPerson(person))
+        if (person) {
+          response.json(formatPerson(person))
+        } else {
+          response.status(404).end()
+        }
       })
-    } else {
-      response.status(404).end()
-    }
+      .catch(error => {
+        console.log(error)
+        response.status(404).send({ error: 'malformatted id' })
+      })
   })
 
   app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-    response.status(204).end()
+    Person
+      .findByIdAndRemove(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => {
+        response.status(400).send({ error: 'malformatted id' })
+      })
   })
 
   app.post('/api/persons', (request, response) => {
