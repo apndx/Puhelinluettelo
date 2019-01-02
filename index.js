@@ -36,6 +36,8 @@ let persons = [
     }
   }
 
+ 
+
   app.get('/', (req, res) => {
     res.send('<h1>Tervetuloa puhelinluetteloon!</h1>')
   })
@@ -49,15 +51,28 @@ let persons = [
       })
   })
   
-  app.get('/info', (req, res) => {
+  const getInfo = (personsData) => {
 
-    const info = {
-      luettelossa: persons.length,
+    return {
+      luettelossa: personsData.length,
       date : new Date()
     }
+  }
 
-    res.send(info)
 
+  app.get('/info', (req, res) => {
+
+    Person
+    .find({})
+    .then(persons => {
+      if (persons) {
+        res.json(getInfo(persons))
+      } else {}
+      response.status(404).end()
+    })
+    .catch(error => {
+      response.status(400).end()
+    })
   })
 
   app.get('/api/persons/:id', (request, response) => {
