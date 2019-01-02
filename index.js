@@ -99,8 +99,8 @@ let persons = [
     } else {
       const person = new Person( {
         name: body.name,
-        phone: body.phone,
-        id: getRandomInt(1000000)
+        phone: body.phone
+        //id: getRandomInt(1000000)
     })
       persons = persons.concat(person)
 
@@ -115,6 +115,27 @@ let persons = [
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
+
+
+  app.put('/api/persons/:id', (request, response) => {
+    const body = request.body
+
+    const person = {
+      name: body.name,
+      phone: body.phone,
+    }
+
+    Person  
+    .findByIdAndUpdate(request.params.id, person, { new: true } )
+    .then(updatedPerson => {
+      response.json(formatPerson(updatedPerson))
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(400).send({ error: 'malformatted id' })
+    })
+  })
+
 
   const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
