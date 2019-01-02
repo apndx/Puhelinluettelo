@@ -104,25 +104,34 @@ let persons = [
 
   app.post('/api/persons', (request, response) => {
     const body = request.body
-    const names = persons.map(person => person.name)
+    //const names = persons.map(person => person.name)
+    //console.log('nimilista', names)
     console.log('pyynnön data', request.body)
-    console.log('nimilista', names)
+    console.log('lisättävä nimi', body.name)
     if (body.name === undefined || body.phone === undefined) {
       return response.status(400).json({error: 'name or phone number missing'})
-    } else if (names.includes(body.name)){
-      return response.status(400).json({error: 'name already exists'})
     } else {
-      const person = new Person( {
-        name: body.name,
-        phone: body.phone
-        //id: getRandomInt(1000000)
-    })
-      persons = persons.concat(person)
 
-      person 
-        .save()
-        .then(savedPerson => {
-          response.json(formatPerson(savedPerson))
+      Person
+        .findOne({name: body.name})
+        .then(result => {
+          if (result === null ) {
+            const person = new Person( {
+              name: body.name,
+              phone: body.phone
+              //id: getRandomInt(1000000)
+            })
+
+            persons = persons.concat(person)
+
+            person 
+              .save()
+              .then(savedPerson => {
+                response.json(formatPerson(savedPerson))
+              })
+          } else {
+            return response.status(400).json({error: 'a same name cannot be added again'})
+          }
         })
     }
   })
